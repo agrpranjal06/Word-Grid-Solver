@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+import string
 
 class WordGridSolver:
     def __init__(self, master, grid):
@@ -97,14 +98,14 @@ class WordGridSolver:
        
         self.found_words_text.pack(side=tk.TOP, pady=(50, 0))
 
+def generate_random_grid(rows, cols):
+    letters = string.ascii_uppercase
+    grid = [[random.choice(letters) for _ in range(cols)] for _ in range(rows)]
+    return grid
+
+
 def main():
-    grid = [
-        ['A', 'B', 'C', 'D', 'E','K'],
-        ['F', 'G', 'H', 'I', 'J','G'],
-        ['K', 'L', 'M', 'N', 'O','S'],
-        ['P', 'Q', 'R', 'S', 'T','I'],
-        ['U', 'V', 'W', 'X', 'Y','R'],
-    ]
+    grid=generate_random_grid(6, 6)
 
     root = tk.Tk()
     app = WordGridSolver(root, grid)
@@ -113,3 +114,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

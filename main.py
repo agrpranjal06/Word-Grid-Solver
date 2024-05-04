@@ -28,6 +28,8 @@ class WordGridSolver:
         self.found_words_text = tk.Text(master, height=10, width=30, font=("Arial", 12), bg="black", fg="white")
         self.found_words_text.pack()
 
+        self.used_indices = []
+
         self.draw_background()
 
     def add_word(self):
@@ -57,8 +59,10 @@ class WordGridSolver:
             for i in range(len(self.grid)):
                 for j in range(len(self.grid[0])):
                     if self.grid[i][j] == word[0]:
-                        if self.dfs_search(word, i, j, set()):
+                        indices = [(i, j)]
+                        if self.dfs_search(word, i, j, set(), indices):
                             found_words.append(f"'{word}' found")
+                            self.draw_red_line(indices)
                             found = True
                             break
                 if found:
@@ -68,16 +72,15 @@ class WordGridSolver:
 
         self.display_found_words(found_words)
 
-    def dfs_search(self, word, i, j, visited, index=0):
+    def dfs_search(self, word, i, j, visited, indices, index=0):
         if index == len(word):
             return True
 
         if i < 0 or i >= len(self.grid) or j < 0 or j >= len(self.grid[0]):
             return False
-
         if (i, j) in visited:
             return False
-
+        
         if self.grid[i][j] != word[index]:
             return False
 
@@ -85,11 +88,16 @@ class WordGridSolver:
 
         for dx in range(-1, 2):
             for dy in range(-1, 2):
-                if self.dfs_search(word, i+dx, j+dy, visited, index+1):
+                if self.dfs_search(word, i+dx, j+dy, visited, indices + [(i+dx, j+dy)], index+1):
                     return True
 
         visited.remove((i, j))
         return False
+
+    def draw_red_line(self, indices):
+        for idx in indices:
+            i, j = idx
+            self.canvas.create_rectangle(j*100, i*100, (j+1)*100, (i+1)*100, outline="red", width=3)
 
     def display_found_words(self, found_words):
         self.found_words_text.delete('1.0', tk.END)
@@ -114,4 +122,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+

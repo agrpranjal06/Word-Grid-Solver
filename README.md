@@ -1,7 +1,7 @@
 # Word-Grid-Solver
 Solving word grid search using DFS in python with tkinter GUI
 
-By team Sky_is_blue
+By team Sky_is_blue.
 
 Team Members - Pranjal Agrawal(agrpranjal06) , Srijan Sinha(SrijanSinha23) , Abhiraj Rathour(AbhiRajIIITNR)
 
